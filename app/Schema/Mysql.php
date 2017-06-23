@@ -17,10 +17,10 @@ function version_125(PDO $pdo)
             `task_id` int(11) NOT NULL,
             `user_id` int(11) NOT NULL,
             UNIQUE KEY (`task_id`,`user_id`),
-            KEY `task_id` (`task_id`),
-            KEY `user_id` (`user_id`),
-            CONSTRAINT `task_has_links_ibfk_1` FOREIGN KEY (`link_id`) REFERENCES `links` (`id`) ON DELETE CASCADE,
+            KEY `task_has_users_idx1` (`task_id`),
+            KEY `task_has_users_idx2` (`user_id`),
             CONSTRAINT `task_has_users_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE,
+            CONSTRAINT `task_has_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");
 }
