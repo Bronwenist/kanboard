@@ -45,7 +45,7 @@ class TaskLinkEventBuilder extends BaseEventBuilder
         return new TaskLinkEvent(array(
             'task_link' => $taskLink,
             'task' => $this->taskFinderModel->getDetails($taskLink['task_id']),
-            'taskusers' => $this->taskUserModel->getAll($this->taskId),
+            'taskusers' => $this->taskUserModel->getAll($taskLink['task_id']),
         ));
     }
 

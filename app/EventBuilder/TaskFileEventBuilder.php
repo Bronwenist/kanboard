@@ -46,7 +46,7 @@ class TaskFileEventBuilder extends BaseEventBuilder
         return new TaskFileEvent(array(
             'file' => $file,
             'task' => $this->taskFinderModel->getDetails($file['task_id']),
-            'taskusers' => $this->taskUserModel->getAll($this->taskId),
+            'taskusers' => $this->taskUserModel->getAll($file['task_id']),
         ));
     }
 
