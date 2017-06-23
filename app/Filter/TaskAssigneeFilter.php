@@ -5,6 +5,7 @@ namespace Kanboard\Filter;
 use Kanboard\Core\Filter\FilterInterface;
 use Kanboard\Model\TaskModel;
 use Kanboard\Model\UserModel;
+use Kanboard\Model\TaskUserModel;
 
 /**
  * Filter tasks by assignee
@@ -59,7 +60,12 @@ class TaskAssigneeFilter extends BaseFilter implements FilterInterface
         } else {
             switch ($this->value) {
                 case 'me':
-                    $this->query->eq(TaskModel::TABLE.'.owner_id', $this->currentUserId);
+                    // $this->query->eq(TaskModel::TABLE.'.owner_id', $this->currentUserId);
+                    $this->query
+                        ->beginOr()
+                        ->eq(TaskModel::TABLE.'.owner_id', $this->currentUserId)
+                        ->addCondition(TaskModel::TABLE.".id IN (SELECT task_id FROM ".TaskUserModel::TABLE." WHERE ".TaskUserModel::TABLE.".user_id='$this->currentUserId')")
+                        ->closeOr();
                     break;
                 case 'nobody':
                     $this->query->eq(TaskModel::TABLE.'.owner_id', 0);
@@ -73,3 +79,4 @@ class TaskAssigneeFilter extends BaseFilter implements FilterInterface
         }
     }
 }
+
