@@ -6,6 +6,7 @@
         data-edit-url="<?= $this->url->href('TaskModificationController', 'edit', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>"
         data-subtask-url="<?= $this->url->href('SubtaskController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>"
         data-internal-link-url="<?= $this->url->href('TaskInternalLinkController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>"
+        data-user-url="<?= $this->url->href('TaskUserController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>"
         data-comment-url="<?= $this->url->href('CommentController', 'create', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>">
 
         <?= $this->render($sidebar_template, array('task' => $task)) ?>

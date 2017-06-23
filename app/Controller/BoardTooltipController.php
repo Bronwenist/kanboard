@@ -40,6 +40,22 @@ class BoardTooltipController extends BaseController
         )));
     }
 
+
+    /**
+     * Get list of users on mouseover
+     *
+     * @access public
+     */
+    public function taskusers()
+    {
+        $task = $this->getTask();
+        $this->response->html($this->template->render('board/tooltip_taskusers', array(
+            'taskusers' => $this->taskUserModel->getAll($task['id']),
+            'task' => $task,
+        )));    
+    }
+
+
     /**
      * Get subtasks on mouseover
      *

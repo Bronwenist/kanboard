@@ -22,6 +22,17 @@
     )) ?>
 <?php endif ?>
 
+<?php if (!empty($taskusers)): ?>
+    <?= $this->hook->render('template:task:show:before-taskusers', array('task' => $task, 'project' => $project)) ?>
+    <?= $this->render('task_user/show', array(
+        'task' => $task,
+        'taskusers' => $taskusers,
+        'project' => $project,
+        'editable' => $this->user->hasProjectAccess('TaskUserController', 'edit', $project['id']),
+        'is_public' => true,
+    )) ?>
+<?php endif ?>
+
 <?php if (!empty($internal_links)): ?>
     <?= $this->hook->render('template:task:show:before-internal-links', array('task' => $task, 'project' => $project)) ?>
     <?= $this->render('task_internal_link/show', array(

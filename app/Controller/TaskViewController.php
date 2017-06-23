@@ -73,6 +73,7 @@ class TaskViewController extends BaseController
             'subtasks' => $subtasks,
             'internal_links' => $this->taskLinkModel->getAllGroupedByLabel($task['id']),
             'external_links' => $this->taskExternalLinkModel->getAll($task['id']),
+            'taskusers' => $this->taskUserModel->getAll($task['id']),
             'link_label_list' => $this->linkModel->getList(0, false),
             'tags' => $this->taskTagModel->getList($task['id']),
         )));

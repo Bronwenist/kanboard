@@ -79,6 +79,10 @@
             <span title="<?= t('Recurrence') ?>" class="tooltip" data-href="<?= $this->url->href('BoardTooltipController', 'recurrence', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>"><i class="fa fa-refresh fa-rotate-90 fa-inverse"></i></span>
         <?php endif ?>
 
+        <?php if (! empty($task['nb_users'])): ?>
+            <span title="<?= t('Users') ?>" class="tooltip" data-href="<?= $this->url->href('BoardTooltipController', 'taskusers', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>"><i class="fa fa-user-o fa-fw"></i><?= $task['nb_users'] ?></span>
+        <?php endif ?>
+
         <?php if (! empty($task['nb_links'])): ?>
             <span title="<?= t('Links') ?>" class="tooltip" data-href="<?= $this->url->href('BoardTooltipController', 'tasklinks', array('task_id' => $task['id'], 'project_id' => $task['project_id'])) ?>"><i class="fa fa-code-fork fa-fw"></i><?= $task['nb_links'] ?></span>
         <?php endif ?>
