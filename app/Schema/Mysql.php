@@ -8,7 +8,22 @@ use PDO;
 use Kanboard\Core\Security\Token;
 use Kanboard\Core\Security\Role;
 
-const VERSION = 124;
+const VERSION = 125;
+
+function version_125(PDO $pdo)
+{
+    $pdo->exec("
+        CREATE TABLE `task_has_users` (
+            `task_id` int(11) NOT NULL,
+            `user_id` int(11) NOT NULL,
+            UNIQUE KEY (`task_id`,`user_id`),
+            KEY `task_id` (`task_id`),
+            KEY `user_id` (`user_id`),
+            CONSTRAINT `task_has_links_ibfk_1` FOREIGN KEY (`link_id`) REFERENCES `links` (`id`) ON DELETE CASCADE,
+            CONSTRAINT `task_has_users_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE,
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+    ");
+}
 
 function version_124(PDO $pdo)
 {
