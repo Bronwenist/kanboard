@@ -60,13 +60,14 @@ class TaskFinderModel extends Base
     public function getUserQuery($user_id)
     {
         return $this->getExtendedQuery()
-                    ->beginOr()
-                    ->eq(TaskModel::TABLE.'.owner_id', $user_id)
-                    ->addCondition(TaskModel::TABLE.".id IN (SELECT task_id FROM ".SubtaskModel::TABLE." WHERE ".SubtaskModel::TABLE.".user_id='$user_id')")
-                    ->closeOr()
-                    ->eq(TaskModel::TABLE.'.is_active', TaskModel::STATUS_OPEN)
-                    ->eq(ProjectModel::TABLE.'.is_active', ProjectModel::ACTIVE)
-                    ->eq(ColumnModel::TABLE.'.hide_in_dashboard', 0);
+            ->beginOr()
+            ->eq(TaskModel::TABLE.'.owner_id', $user_id)
+            ->addCondition(TaskModel::TABLE.".id IN (SELECT task_id FROM ".SubtaskModel::TABLE." WHERE ".SubtaskModel::TABLE.".user_id='$user_id')")
+            ->addCondition(TaskModel::TABLE.".id IN (SELECT task_id FROM ".TaskUserModel::TABLE." WHERE ".TaskUserModel::TABLE.".user_id='$user_id')")
+            ->closeOr()
+            ->eq(TaskModel::TABLE.'.is_active', TaskModel::STATUS_OPEN)
+            ->eq(ProjectModel::TABLE.'.is_active', ProjectModel::ACTIVE)
+            ->eq(ColumnModel::TABLE.'.hide_in_dashboard', 0);
     }
 
     /**
