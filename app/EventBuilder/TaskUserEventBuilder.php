@@ -56,6 +56,7 @@ class TaskUserEventBuilder extends BaseEventBuilder
         return new TaskUserEvent(array(
             'taskuser' => $taskUser,
             'task' => $this->taskFinderModel->getDetails($this->taskId),
+            'taskusers' => $this->taskUserModel->getAll($this->taskId),
         ));
     }
 

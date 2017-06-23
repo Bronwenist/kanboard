@@ -155,7 +155,14 @@ class UserNotificationFilterModel extends Base
      */
     public function filterAssignee(array $user, array $event_data)
     {
-        return $user['notifications_filter'] == self::FILTER_ASSIGNEE && $event_data['task']['owner_id'] == $user['id'];
+        // return $user['notifications_filter'] == self::FILTER_ASSIGNEE && $event_data['task']['owner_id'] == $user['id'];
+        if ($user['notifications_filter'] == self::FILTER_ASSIGNEE) {
+            if ($event_data['task']['owner_id'] == $user['id']) return true ;
+            if (!empty($event_data['taskusers'])) foreach ($event_data['taskusers'] as $taskuser) {
+                if ($taskuser['user_id'] == $user['id']) return true ;
+            }
+        }
+        return false ;
     }
 
     /**
@@ -181,8 +188,16 @@ class UserNotificationFilterModel extends Base
      */
     public function filterBoth(array $user, array $event_data)
     {
-        return $user['notifications_filter'] == self::FILTER_BOTH &&
-               ($event_data['task']['creator_id'] == $user['id'] || $event_data['task']['owner_id'] == $user['id']);
+        // return $user['notifications_filter'] == self::FILTER_BOTH &&
+        //        ($event_data['task']['creator_id'] == $user['id'] || $event_data['task']['owner_id'] == $user['id']);
+        if ($user['notifications_filter'] == self::FILTER_BOTH) {
+            if ($event_data['task']['creator_id'] == $user['id']) return true ;
+            if ($event_data['task']['owner_id'] == $user['id']) return true ;
+            if (!empty($event_data['taskusers'])) foreach ($event_data['taskusers'] as $taskuser) {
+                if ($taskuser['user_id'] == $user['id']) return true ;
+            }
+        }
+        return false ;
     }
 
     /**

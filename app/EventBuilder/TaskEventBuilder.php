@@ -104,6 +104,7 @@ class TaskEventBuilder extends BaseEventBuilder
         $eventData = array();
         $eventData['task_id'] = $this->taskId;
         $eventData['task'] = $this->taskFinderModel->getDetails($this->taskId);
+        $eventData['taskusers'] = $this->taskUserModel->getAll($this->taskId);
 
         if (empty($eventData['task'])) {
             $this->logger->debug(__METHOD__.': Task not found');
