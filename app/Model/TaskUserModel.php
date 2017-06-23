@@ -105,8 +105,7 @@ class TaskUserModel extends Base
         }
         $this->db->closeTransaction();
 
-        // @TODO - Fire an event here?
-
+        $this->queueManager->push($this->taskUserEventJob->withParams($task_id, $user_id, self::EVENT_CREATE));
         return true ;
     }
 
@@ -121,12 +120,9 @@ class TaskUserModel extends Base
      */
     public function remove($task_id, $user_id)
     {
-
-        // @TODO - Fire an event here?
-        // $this->queueManager->push($this->taskLinkEventJob->withParams($task_link_id, $eventName));
+        $this->taskUserEventJob->execute($task_id, $user_id, self::EVENT_DELETE);
 
         $this->db->startTransaction();
-
         $result = $this->db
             ->table(self::TABLE)
             ->eq('task_id', $task_id)

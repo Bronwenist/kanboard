@@ -9,6 +9,7 @@ use Kanboard\EventBuilder\SubtaskEventBuilder;
 use Kanboard\EventBuilder\TaskEventBuilder;
 use Kanboard\EventBuilder\TaskFileEventBuilder;
 use Kanboard\EventBuilder\TaskLinkEventBuilder;
+use Kanboard\EventBuilder\TaskUserEventBuilder;
 
 /**
  * Notification Model
@@ -93,6 +94,7 @@ class NotificationModel extends Base
             ->withBuilder(SubtaskEventBuilder::getInstance($this->container))
             ->withBuilder(TaskFileEventBuilder::getInstance($this->container))
             ->withBuilder(TaskLinkEventBuilder::getInstance($this->container))
+            ->withBuilder(TaskUserEventBuilder::getInstance($this->container))
         ;
 
         return $iterator;
